@@ -5,6 +5,13 @@ import { useSession, signIn, signOut } from 'next-auth/react';
 const NavBar: NextPage = () => {
   const { data: session } = useSession();
 
+  const closeMenu = () => {
+    const checkBox = document.getElementById('menu-toggle');
+
+    // @ts-ignore
+    checkBox.checked = false;
+  };
+
   return (
     <div className="antialiased bg-alpha border-b-2 shadow-sm">
       <header className="lg:px-16 px-6 bg-bloack flex flex-wrap items-center lg:py-0 py-2">
@@ -34,7 +41,10 @@ const NavBar: NextPage = () => {
           <nav>
             <ul className="lg:flex items-center justify-between text-base pt-4 lg:pt-0">
               <li>
-                <a className="my-6 inline-flex items-center py-3 px-3 rounded font-bold hover:text-beta">
+                <a
+                  className="my-6 inline-flex items-center py-3 px-3 rounded font-bold hover:text-beta"
+                  onClick={closeMenu}
+                >
                   <NavLink href="/">Home</NavLink>
                 </a>
               </li>
@@ -42,7 +52,10 @@ const NavBar: NextPage = () => {
                 {session ? (
                   <></>
                 ) : (
-                  <a className="my-6 inline-flex items-center py-3 px-3 rounded font-bold hover:text-beta">
+                  <a
+                    className="my-6 inline-flex items-center py-3 px-3 rounded font-bold hover:text-beta"
+                    onClick={closeMenu}
+                  >
                     <NavLink href="/register">Sign Up</NavLink>
                   </a>
                 )}
@@ -51,14 +64,20 @@ const NavBar: NextPage = () => {
                 {session ? (
                   <button
                     className="my-6 inline-flex items-center py-3 px-3 rounded font-bold hover:text-beta"
-                    onClick={() => signOut()}
+                    onClick={e => {
+                      signOut();
+                      closeMenu();
+                    }}
                   >
                     Sign Out
                   </button>
                 ) : (
                   <button
                     className="my-6 inline-flex items-center py-3 px-3 rounded font-bold hover:text-beta"
-                    onClick={() => signIn()}
+                    onClick={() => {
+                      signIn();
+                      closeMenu();
+                    }}
                   >
                     Sign In
                   </button>
