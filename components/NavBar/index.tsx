@@ -6,7 +6,7 @@ const NavBar: NextPage = () => {
   const { data: session } = useSession();
 
   return (
-    <div className="antialiased bg-alpha">
+    <div className="antialiased bg-alpha border-b-2 shadow-sm">
       <header className="lg:px-16 px-6 bg-bloack flex flex-wrap items-center lg:py-0 py-2">
         <div className="flex-1 flex justify-between items-center">
           <a className="inline-flex items-center py-6 px-3 text-beta text-4xl font-bold cursive tracking-widest">

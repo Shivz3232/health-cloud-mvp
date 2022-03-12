@@ -1,11 +1,8 @@
 import type { NextPage } from 'next';
+import Home from '../components/Home';
 
-const Home: NextPage = () => {
-  return (
-    <div className="flex justify-center">
-      <p>Home</p>
-    </div>
-  );
+const Index: NextPage = () => {
+  return <Home />;
 };
 
-export default Home;
+export default Index;
