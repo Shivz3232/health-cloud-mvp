@@ -40,18 +40,27 @@ const NavBar: NextPage = () => {
               </li>
               <li>
                 {session ? (
+                  <></>
+                ) : (
+                  <a className="my-6 inline-flex items-center py-3 px-3 rounded font-bold hover:text-beta">
+                    <NavLink href="/register">Sign Up</NavLink>
+                  </a>
+                )}
+              </li>
+              <li>
+                {session ? (
                   <button
                     className="my-6 inline-flex items-center py-3 px-3 rounded font-bold hover:text-beta"
                     onClick={() => signOut()}
                   >
-                    Logout
+                    Sign Out
                   </button>
                 ) : (
                   <button
                     className="my-6 inline-flex items-center py-3 px-3 rounded font-bold hover:text-beta"
                     onClick={() => signIn()}
                   >
-                    Login
+                    Sign In
                   </button>
                 )}
               </li>
