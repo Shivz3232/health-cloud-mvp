@@ -1,5 +1,7 @@
 import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
+import User from '../../../models/user';
+import bcrypt from 'bcrypt';
 
 export default NextAuth({
   providers: [
@@ -7,22 +9,40 @@ export default NextAuth({
       name: 'Credentials',
 
       credentials: {
-        username: {
+        email: {
           label: 'Email',
-          type: 'text',
+          type: 'email',
           placeholder: 'jsmith@example.com',
         },
         password: { label: 'Password', type: 'password' },
       },
 
       async authorize(credentials, req) {
-        // Add logic here to look up the user from the credentials supplied
-        const user = { id: 1, name: 'J Smith', email: 'jsmith@example.com' };
-
-        if (user) {
-          return user;
-        } else {
+        if (!credentials) {
           return null;
+        }
+
+        // Add logic here to look up the user from the credentials supplied
+        const user = await User.findOne({ email: credentials.email });
+
+        if (!user) {
+          throw new Error('Email does not exist');
+        }
+
+        const passwordValid = bcrypt.compareSync(
+          credentials.password,
+          user.password
+        );
+
+        if (passwordValid) {
+          return {
+            firstName: user.firstName,
+            lastName: user.lastName,
+            email: user.email,
+            role: user.role,
+          };
+        } else {
+          throw new Error('Invalid password');
         }
       },
     }),
