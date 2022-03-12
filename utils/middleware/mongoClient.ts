@@ -1,8 +1,8 @@
 import mongoose from 'mongoose';
 import { NextApiRequest, NextApiResponse } from 'next';
 
-// @ts-ignore
 const connect =
+  // @ts-ignore
   handler => async (req: NextApiRequest, res: NextApiResponse) => {
     if (mongoose.connections[0].readyState) {
       // if connection already exists
