@@ -53,7 +53,7 @@ const Register: NextPage = () => {
   return (
     <main className="flex justify-center m-20">
       <div className="flex flex-col items-center p-12 bg-alpha rounded-lg border-2 shadow-lg">
-        <h1 className="text-5xl">Create An Account</h1>
+        <h1 className="text-3xl md:text-5xl text-center">Create An Account</h1>
         <form
           className="flex flex-col items-start mt-10 p-4 gap-4"
           onSubmit={register}
