@@ -23,7 +23,7 @@ const NavBar: NextPage = () => {
 
         <label htmlFor="menu-toggle" className="cursor-pointer lg:hidden block">
           <svg
-            className="fill-current text-white"
+            className="fill-current text-beta"
             xmlns="http://www.w3.org/2000/svg"
             width="20"
             height="20"
