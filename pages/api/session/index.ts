@@ -1,6 +1,8 @@
 import { NextApiResponse, NextApiRequest } from 'next';
 import Session from '../../../models/session';
+import Record from '../../../models/record';
 import { getSession } from 'next-auth/react';
+import connect from '../../../utils/middleware/mongoClient';
 
 const GetSession = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method != 'GET') {
@@ -31,10 +33,13 @@ const GetSession = async (req: NextApiRequest, res: NextApiResponse) => {
     'firstName lastName'
   );
 
+  const recordDocs = await Record.find({ sessionId: sessionId }, '-__v');
+
   res.json({
     sessionData: sessionDoc,
+    sessionRecords: recordDocs,
   });
   res.end();
 };
 
-export default GetSession;
+export default connect(GetSession);
