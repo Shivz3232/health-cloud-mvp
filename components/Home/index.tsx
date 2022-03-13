@@ -5,8 +5,8 @@ import Link from 'next/link';
 const Home: NextPage = () => {
   return (
     <main className="h-screen flex flex-col items-center bg-gamma">
-      <section className="h-1/2 flex justify-content-center items-center p-14">
-        <p className="text-5xl text-center font-bold">
+      <section className="h-1/2 flex justify-content-center items-center p-10">
+        <p className="text-4xl text-center font-bold">
           Simplify and sreamline recordkeeping of your health with Health Cloud!
         </p>
       </section>
