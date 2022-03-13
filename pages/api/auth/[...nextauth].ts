@@ -2,6 +2,7 @@ import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import User from '../../../models/user';
 import bcrypt from 'bcrypt';
+import dbConnect from '../../../utils/dbConnect';
 
 export default NextAuth({
   providers: [
@@ -23,6 +24,7 @@ export default NextAuth({
         }
 
         // Add logic here to look up the user from the credentials supplied
+        await dbConnect();
         const user = await User.findOne({ email: credentials.email });
 
         if (!user) {
@@ -47,4 +49,7 @@ export default NextAuth({
       },
     }),
   ],
+  pages: {
+    signIn: '/signin',
+  },
 });

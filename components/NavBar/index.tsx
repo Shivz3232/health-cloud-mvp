@@ -16,9 +16,9 @@ const NavBar: NextPage = () => {
     <div className="antialiased bg-alpha border-b-2 shadow-sm">
       <header className="lg:px-16 px-6 bg-bloack flex flex-wrap items-center lg:py-0 py-2">
         <div className="flex-1 flex justify-between items-center">
-          <a className="inline-flex items-center py-6 px-3 text-beta text-4xl font-bold cursive tracking-widest">
+          <div className="inline-flex items-center py-6 px-3 text-beta text-3xl font-bold cursive tracking-widest">
             <NavLink href="/">Health Cloud</NavLink>
-          </a>
+          </div>
         </div>
 
         <label htmlFor="menu-toggle" className="cursor-pointer lg:hidden block">
@@ -39,25 +39,25 @@ const NavBar: NextPage = () => {
           id="menu"
         >
           <nav>
-            <ul className="lg:flex items-center justify-between text-base pt-4 lg:pt-0">
+            <ul className="lg:flex items-center justify-between text-xl pt-4 lg:pt-0">
               <li>
-                <a
+                <div
                   className="my-6 inline-flex items-center py-3 px-3 rounded font-bold hover:text-beta"
                   onClick={closeMenu}
                 >
                   <NavLink href="/">Home</NavLink>
-                </a>
+                </div>
               </li>
               <li>
                 {session ? (
                   <></>
                 ) : (
-                  <a
+                  <div
                     className="my-6 inline-flex items-center py-3 px-3 rounded font-bold hover:text-beta"
                     onClick={closeMenu}
                   >
                     <NavLink href="/register">Sign Up</NavLink>
-                  </a>
+                  </div>
                 )}
               </li>
               <li>
