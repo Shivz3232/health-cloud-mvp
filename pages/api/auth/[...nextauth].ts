@@ -52,4 +52,33 @@ export default NextAuth({
   pages: {
     signIn: '/signin',
   },
+  callbacks: {
+    async jwt({ token, user, account, profile, isNewUser }) {
+      // Initial sign in
+      if (account && user) {
+        const userDoc = await User.findOne(
+          { email: token.email },
+          '-password -createdAt -updatedAt -__v'
+        );
+
+        if (!userDoc) {
+          throw new Error("User doesn't exist");
+        }
+
+        token.user = userDoc.toObject();
+
+        return token;
+      } else {
+        return token;
+      }
+    },
+    async session({ session, user, token }) {
+      if (token) {
+        // @ts-ignore
+        session.user = token.user;
+      }
+
+      return session;
+    },
+  },
 });
