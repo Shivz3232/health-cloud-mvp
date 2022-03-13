@@ -4,6 +4,12 @@ import { getSession } from 'next-auth/react';
 import geneartePermitCode from '../../utils/generatePermitCode';
 
 const NewPermit = async (req: NextApiRequest, res: NextApiResponse) => {
+  if (req.method != 'POST') {
+    res.status(405);
+    res.setHeader('Access-Control-Allow-Methods', 'POST');
+    return res.end();
+  }
+
   const session = await getSession({ req });
 
   if (!session) {
@@ -16,12 +22,6 @@ const NewPermit = async (req: NextApiRequest, res: NextApiResponse) => {
     res.json({
       message: 'Only patients can issue permits',
     });
-    return res.end();
-  }
-
-  if (req.method != 'POST') {
-    res.status(405);
-    res.setHeader('Access-Control-Allow-Methods', 'POST');
     return res.end();
   }
 
