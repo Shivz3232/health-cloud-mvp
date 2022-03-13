@@ -9,6 +9,7 @@ const Doctor = () => {
   // @ts-ignore
   const handler = async e => {
     e.preventDefault();
+    setError('');
 
     const code = e.target.code.value;
 
@@ -37,7 +38,7 @@ const Doctor = () => {
       );
     }
 
-    router.push(`/session/${result.data.session.id}`);
+    router.push(`/sessions/${result.data.session.id}`);
   };
 
   return (

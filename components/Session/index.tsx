@@ -20,7 +20,10 @@ const Session: FC<props> = ({ session }) => {
         </span>
       </p>
       <p className="font-semibold">
-        Status: <span className="font-normal">{session.status}</span>
+        Status:{' '}
+        <span className="font-normal">
+          {session.active ? 'Active' : 'Inactive'}
+        </span>
       </p>
     </div>
   );

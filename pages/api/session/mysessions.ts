@@ -19,10 +19,10 @@ const GetMySessions = async (req: NextApiRequest, res: NextApiResponse) => {
 
   const userId = session.user._id;
 
-  const sessionDocs = await Session.find({ doctorId: userId }, '-__v').populate(
-    'patientId',
-    'firstName lastName'
-  );
+  const sessionDocs = await Session.find({ doctorId: userId }, '-__v')
+    .populate('patientId', 'firstName lastName')
+    .sort('createdAt')
+    .sort('updatedAt');
 
   res.json({
     sessions: sessionDocs,
