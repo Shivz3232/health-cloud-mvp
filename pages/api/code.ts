@@ -2,6 +2,7 @@ import { NextApiResponse, NextApiRequest } from 'next';
 import Permit from '../../models/permit';
 import { getSession } from 'next-auth/react';
 import geneartePermitCode from '../../utils/generatePermitCode';
+import connect from '../../utils/middleware/mongoClient';
 
 const NewPermit = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method != 'POST') {
@@ -41,4 +42,4 @@ const NewPermit = async (req: NextApiRequest, res: NextApiResponse) => {
   res.end();
 };
 
-export default NewPermit;
+export default connect(NewPermit);

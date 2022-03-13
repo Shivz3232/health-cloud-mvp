@@ -2,6 +2,7 @@ import { NextApiRequest, NextApiResponse } from 'next';
 import { getSession } from 'next-auth/react';
 import Permit from '../../../models/permit';
 import Session from '../../../models/session';
+import connect from '../../../utils/middleware/mongoClient';
 
 const CreateSession = async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method != 'POST') {
@@ -64,4 +65,4 @@ const CreateSession = async (req: NextApiRequest, res: NextApiResponse) => {
   res.end();
 };
 
-export default CreateSession;
+export default connect(CreateSession);
