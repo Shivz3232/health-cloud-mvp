@@ -24,7 +24,7 @@ const RecordCreationForm: FC<props> = ({ sessionId }) => {
     axios
       .post(`/api/record?sessionId=${sessionId}`, { description })
       .then(() => {
-        router.push(`/session/${sessionId}`);
+        router.push(`/sessions/${sessionId}`);
       })
       .catch(err => {
         setError(err.message);
@@ -39,17 +39,17 @@ const RecordCreationForm: FC<props> = ({ sessionId }) => {
       id="record-form"
     >
       <div className="w-full flex flex-col p-2">
-        <label htmlFor="description" className="text-xl p-2">
+        <label htmlFor="description" className="text-2xl p-2">
           Description
         </label>
         <textarea
           id="description"
           name="description"
-          className="h-8 mt-2 p-2 border-2 rounded-md"
+          className="h-32 text-xl mt-2 p-2 border-2 rounded-md"
         />
       </div>
       <div className="flex flex-col p-2">
-        <label htmlFor="Document" className="text-xl p-2">
+        <label htmlFor="Document" className="text-2xl p-2">
           Document
         </label>
         <input

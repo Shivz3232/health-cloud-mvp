@@ -1,4 +1,5 @@
 import { FC } from 'react';
+import Router from 'next/router';
 
 interface props {
   session: any;
@@ -6,7 +7,10 @@ interface props {
 
 const Session: FC<props> = ({ session }) => {
   return (
-    <div className="p-8 flex flex-col shadow-md text-xl">
+    <div
+      className="p-8 flex flex-col shadow-md text-xl cursor-pointer"
+      onClick={() => Router.push(`/sessions/${session._id}`)}
+    >
       <p className="font-semibold">
         Name:{' '}
         <span className="font-normal">
