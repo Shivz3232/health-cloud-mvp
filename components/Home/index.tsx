@@ -11,13 +11,11 @@ const Home: NextPage = () => {
         </p>
       </section>
       <section className="flex justify-content-center items-center">
-        <a>
-          <Link href="/getstarted" passHref>
-            <button className="px-10 py-8 border-2 bg-alpha shadow-md rounded-lg text-3xl font-semibold">
-              Begin
-            </button>
-          </Link>
-        </a>
+        <Link href="/getstarted" passHref>
+          <button className="px-10 py-8 border-2 bg-alpha shadow-md rounded-lg text-3xl font-semibold">
+            Begin
+          </button>
+        </Link>
       </section>
     </main>
   );
