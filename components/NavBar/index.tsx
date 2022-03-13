@@ -48,6 +48,16 @@ const NavBar: NextPage = () => {
                   <NavLink href="/">Home</NavLink>
                 </div>
               </li>
+              {session && session.user.role == 'doctor' && (
+                <li>
+                  <div
+                    className="my-6 inline-flex items-center py-3 px-3 rounded font-bold hover:text-beta"
+                    onClick={closeMenu}
+                  >
+                    <NavLink href="/sessions">My sessions</NavLink>
+                  </div>
+                </li>
+              )}
               <li>
                 {session ? (
                   <></>
