@@ -1,6 +1,12 @@
-import { models, model, Schema } from 'mongoose';
+import { models, model, Schema, Document, Model } from 'mongoose';
 
-const RecordSchema = new Schema(
+export interface RecordI extends Document {
+  sessionId: Schema.Types.ObjectId;
+  description: string;
+  fileURL: string;
+}
+
+const RecordSchema = new Schema<RecordI>(
   {
     sessionId: {
       type: Schema.Types.ObjectId,
@@ -21,6 +27,7 @@ const RecordSchema = new Schema(
   }
 );
 
-const RecordModel = models.record || model('record', RecordSchema, 'record');
+const RecordModel: Model<RecordI> =
+  models.record || model<RecordI>('record', RecordSchema, 'record');
 
 export default RecordModel;

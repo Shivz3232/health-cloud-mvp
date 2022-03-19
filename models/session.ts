@@ -1,6 +1,13 @@
-import { models, model, Schema } from 'mongoose';
+import { models, model, Schema, Document, Model } from 'mongoose';
 
-const SessionSchema = new Schema(
+export interface SessionI extends Document {
+  doctorId: Schema.Types.ObjectId;
+  patientId: Schema.Types.ObjectId;
+  permitId: Schema.Types.ObjectId;
+  active: boolean;
+}
+
+const SessionSchema = new Schema<SessionI>(
   {
     doctorId: {
       type: Schema.Types.ObjectId,
@@ -27,7 +34,7 @@ const SessionSchema = new Schema(
   }
 );
 
-const SessionModel =
-  models.session || model('session', SessionSchema, 'sessions');
+const SessionModel: Model<SessionI> =
+  models.session || model<SessionI>('session', SessionSchema, 'sessions');
 
 export default SessionModel;

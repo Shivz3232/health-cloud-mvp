@@ -1,6 +1,13 @@
-import { models, model, Schema } from 'mongoose';
+import { models, model, Schema, Document, Model } from 'mongoose';
 
-const PermitSchema = new Schema(
+export interface PermitI extends Document {
+  code: string;
+  expiresAt: Date;
+  userId: Schema.Types.ObjectId;
+  status: 'unused' | 'used';
+}
+
+const PermitSchema = new Schema<PermitI>(
   {
     code: String,
     expiresAt: Date,
@@ -22,6 +29,7 @@ const PermitSchema = new Schema(
   }
 );
 
-const PermitModel = models.permit || model('permit', PermitSchema, 'permit');
+const PermitModel: Model<PermitI> =
+  models.permit || model<PermitI>('permit', PermitSchema, 'permit');
 
 export default PermitModel;
