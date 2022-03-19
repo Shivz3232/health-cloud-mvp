@@ -1,9 +1,29 @@
 import { models, model, Schema, Document, Model } from 'mongoose';
 
+export interface DocumentI extends Document {
+  name: string;
+  url: string;
+  type: string;
+  uploadedAt: string;
+}
+
+const DocumentSchema = new Schema<DocumentI>(
+  {
+    name: { type: String, required: true },
+    url: { type: String, required: true },
+    type: { type: String, required: true },
+  },
+  {
+    timestamps: {
+      createdAt: 'uploadedAt',
+    },
+  }
+);
+
 export interface RecordI extends Document {
   sessionId: Schema.Types.ObjectId;
   description: string;
-  fileURL: string;
+  document: Schema<DocumentI, Model<DocumentI, any, any, any>, any, any>;
   createdAt: string;
   updatedAt: string;
 }
@@ -16,9 +36,8 @@ const RecordSchema = new Schema<RecordI>(
       required: true,
     },
     description: String,
-    fileURL: {
-      type: String,
-      required: false,
+    document: {
+      type: DocumentSchema,
     },
   },
   {

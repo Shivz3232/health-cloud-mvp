@@ -8,12 +8,13 @@ const imagekit = new ImageKit({
   urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT!,
 });
 
-const UploadImage = (file: FileI) =>
+const UploadImage = (file: FileI, folder: string) =>
   new Promise<UploadResponse>((resolve, reject) => {
     const params = {
       file: file.buffer,
       fileName: file.originalname,
       resourceType: 'image',
+      folder: `health_cloud/${folder}`,
     };
 
     imagekit

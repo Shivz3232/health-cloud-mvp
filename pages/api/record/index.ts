@@ -68,7 +68,7 @@ apiRoute.post(async (req, res) => {
 
   const document = (req as MulterRequest).file;
 
-  const imageKitRes = await UploadImage(document)
+  const imageKitRes = await UploadImage(document, 'record_documents')
     .then(res => {
       return res;
     })
@@ -88,7 +88,11 @@ apiRoute.post(async (req, res) => {
   const recordDoc = new Record({
     sessionId,
     description,
-    fileUrl: imageKitRes.url,
+    document: {
+      name: document.originalname,
+      url: imageKitRes.url,
+      type: document.mimetype,
+    },
   });
 
   await recordDoc.save();
