@@ -18,11 +18,14 @@ const RecordCreationForm: FC<props> = ({ sessionId }) => {
     setLoading(true);
 
     const description = e.target.description.value;
-    const file = e.target.document.files[0];
+    const files = e.target.document.files;
 
     const formData = new FormData();
     formData.append('description', description);
-    formData.append('document', file);
+
+    for (let i = 0; i < files.length; i++) {
+      formData.append('documents', files[i]);
+    }
 
     axios
       .post(`/api/record?sessionId=${sessionId}`, formData, {
@@ -59,6 +62,7 @@ const RecordCreationForm: FC<props> = ({ sessionId }) => {
         </label>
         <input
           type="file"
+          multiple
           id="document"
           name="document"
           className="h-8 mt-2 p-2"

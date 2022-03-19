@@ -4,7 +4,7 @@ export interface DocumentI extends Document {
   name: string;
   url: string;
   type: string;
-  uploadedAt: string;
+  uploadedAt?: string;
 }
 
 const DocumentSchema = new Schema<DocumentI>(
@@ -23,7 +23,9 @@ const DocumentSchema = new Schema<DocumentI>(
 export interface RecordI extends Document {
   sessionId: Schema.Types.ObjectId;
   description: string;
-  document: Schema<DocumentI, Model<DocumentI, any, any, any>, any, any>;
+  documents:
+    | Schema<DocumentI, Model<DocumentI, any, any, any>, any, any>[]
+    | undefined;
   createdAt: string;
   updatedAt: string;
 }
@@ -36,8 +38,8 @@ const RecordSchema = new Schema<RecordI>(
       required: true,
     },
     description: String,
-    document: {
-      type: DocumentSchema,
+    documents: {
+      type: [DocumentSchema],
     },
   },
   {

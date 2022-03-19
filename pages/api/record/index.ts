@@ -1,13 +1,13 @@
 import { NextApiResponse, NextApiRequest } from 'next';
 import { getSession } from 'next-auth/react';
-import Record from '../../../models/record';
+import Record, { DocumentI } from '../../../models/record';
 import connect from '../../../utils/middleware/mongoClient';
 import multer from 'multer';
 import nextConnect from 'next-connect';
-import UploadImage from '../../../utils/Imagekit';
+import UploadImage, { UploadMultiple } from '../../../utils/Imagekit';
 
 const multerUpload = multer();
-const uploadMiddleWare = multerUpload.single('document');
+const uploadMiddleWare = multerUpload.array('documents');
 
 export interface FileI {
   fieldname: string;
@@ -19,7 +19,7 @@ export interface FileI {
 }
 
 interface MulterRequest extends NextApiRequest {
-  file: FileI;
+  files: [FileI];
 }
 
 const apiRoute = nextConnect({
@@ -66,11 +66,29 @@ apiRoute.post(async (req, res) => {
       ? req.body.description.trim()
       : false;
 
-  const document = (req as MulterRequest).file;
+  const documents = (req as MulterRequest).files;
 
-  const imageKitRes = await UploadImage(document, 'record_documents')
-    .then(res => {
-      return res;
+  const recordDoc = new Record({
+    sessionId,
+    description,
+  });
+
+  const imageKitRes = await UploadMultiple(
+    documents,
+    `record_documents/${recordDoc._id}`
+  )
+    .then(results => {
+      let documentsData: DocumentI[] = [];
+
+      results.map(result => {
+        documentsData.push({
+          name: result.name,
+          url: result.url,
+          type: result.fileType,
+        } as DocumentI);
+      });
+
+      return documentsData;
     })
     .catch(err => {
       console.log(err);
@@ -80,20 +98,13 @@ apiRoute.post(async (req, res) => {
   if (!imageKitRes) {
     res.status(500);
     res.json({
-      message: 'Error uploading image',
+      message: 'Error uploading documents',
     });
     return res.end();
   }
 
-  const recordDoc = new Record({
-    sessionId,
-    description,
-    document: {
-      name: document.originalname,
-      url: imageKitRes.url,
-      type: document.mimetype,
-    },
-  });
+  // @ts-ignore
+  recordDoc.documents = imageKitRes;
 
   await recordDoc.save();
 

@@ -8,7 +8,7 @@ const imagekit = new ImageKit({
   urlEndpoint: process.env.IMAGEKIT_URL_ENDPOINT!,
 });
 
-const UploadImage = (file: FileI, folder: string) =>
+const UploadSingle = (file: FileI, folder: string) =>
   new Promise<UploadResponse>((resolve, reject) => {
     const params = {
       file: file.buffer,
@@ -29,4 +29,11 @@ const UploadImage = (file: FileI, folder: string) =>
       });
   });
 
-export default UploadImage;
+export const UploadMultiple = (files: FileI[], folder: string) =>
+  Promise.all(
+    files.map(file => {
+      return UploadSingle(file, folder);
+    })
+  );
+
+export default UploadSingle;
