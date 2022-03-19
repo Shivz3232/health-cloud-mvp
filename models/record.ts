@@ -4,6 +4,8 @@ export interface RecordI extends Document {
   sessionId: Schema.Types.ObjectId;
   description: string;
   fileURL: string;
+  createdAt: string;
+  updatedAt: string;
 }
 
 const RecordSchema = new Schema<RecordI>(

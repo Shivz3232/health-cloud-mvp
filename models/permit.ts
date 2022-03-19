@@ -5,6 +5,8 @@ export interface PermitI extends Document {
   expiresAt: string;
   userId: Schema.Types.ObjectId;
   status: 'unused' | 'used';
+  createdAt: string;
+  updatedAt: string;
 }
 
 const PermitSchema = new Schema<PermitI>(

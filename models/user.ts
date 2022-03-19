@@ -6,6 +6,8 @@ export interface UserI extends Document {
   email: string;
   password: string;
   role: 'doctor' | 'patient';
+  createdAt: string;
+  updatedAt: string;
 }
 
 const UserSchema = new Schema<UserI>(

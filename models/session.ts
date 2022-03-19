@@ -5,6 +5,8 @@ export interface SessionI extends Document {
   patientId: Schema.Types.ObjectId;
   permitId: Schema.Types.ObjectId;
   active: boolean;
+  createdAt: string;
+  updatedAt: string;
 }
 
 const SessionSchema = new Schema<SessionI>(
