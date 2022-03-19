@@ -2,7 +2,7 @@ import { NextPage } from 'next';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
-import SessionRecord from '../../components/SessionRecord';
+import RecordCard from '../../components/RecordCard';
 
 const Session: NextPage = () => {
   const router = useRouter();
@@ -65,7 +65,7 @@ const Session: NextPage = () => {
       <div className="mt-4 p-8 flex flex-col gap-2 flex-grow-0 overflow-y-auto">
         {/* @ts-ignore */}
         {sessionRecords.map((record, index: number) => (
-          <SessionRecord key={index} record={record} />
+          <RecordCard key={index} record={record} />
         ))}
       </div>
     </main>

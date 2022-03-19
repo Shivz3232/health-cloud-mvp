@@ -2,7 +2,7 @@ import { NextPage } from 'next';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import { useSession, signIn } from 'next-auth/react';
-import Session from '../../components/Session';
+import SessionCard from '../../components/SessionCard';
 import { useRouter } from 'next/router';
 
 const Sessions: NextPage = () => {
@@ -44,7 +44,7 @@ const Sessions: NextPage = () => {
         <div className="mt-4 p-8 flex flex-col gap-2 flex-grow-0 overflow-y-auto">
           {/* @ts-ignore */}
           {sessions.map((session, index: number) => (
-            <Session key={index} session={session} />
+            <SessionCard key={index} session={session} />
           ))}
         </div>
       )}
