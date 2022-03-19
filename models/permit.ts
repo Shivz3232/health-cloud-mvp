@@ -2,7 +2,7 @@ import { models, model, Schema, Document, Model } from 'mongoose';
 
 export interface PermitI extends Document {
   code: string;
-  expiresAt: Date;
+  expiresAt: string;
   userId: Schema.Types.ObjectId;
   status: 'unused' | 'used';
 }

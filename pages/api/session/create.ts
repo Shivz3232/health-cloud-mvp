@@ -38,7 +38,7 @@ const CreateSession = async (req: NextApiRequest, res: NextApiResponse) => {
     return res.end();
   }
 
-  if (Date.now() > permit.expiresAt || permit.status == 'used') {
+  if (new Date() > new Date(permit.expiresAt) || permit.status == 'used') {
     res.status(400);
     res.json({
       message: 'Invalid permit',
