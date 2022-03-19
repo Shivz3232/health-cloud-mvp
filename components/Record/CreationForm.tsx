@@ -7,7 +7,6 @@ interface props {
 }
 
 const RecordCreationForm: FC<props> = ({ sessionId }) => {
-  console.log(sessionId);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -21,8 +20,14 @@ const RecordCreationForm: FC<props> = ({ sessionId }) => {
     const description = e.target.description.value;
     const file = e.target.document.files[0];
 
+    const formData = new FormData();
+    formData.append('description', description);
+    formData.append('document', file);
+
     axios
-      .post(`/api/record?sessionId=${sessionId}`, { description })
+      .post(`/api/record?sessionId=${sessionId}`, formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
       .then(() => {
         router.push(`/sessions/${sessionId}`);
       })
