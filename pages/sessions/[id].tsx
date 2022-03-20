@@ -34,6 +34,19 @@ const Session: NextPage = () => {
         });
   }, [sessionId]);
 
+  const endSession = () => {
+    axios
+      .post('/api/session/end', {
+        sessionId,
+      })
+      .then(res => {
+        router.push('/sessions');
+      })
+      .catch(err => {
+        setError(err.message);
+      });
+  };
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -49,18 +62,48 @@ const Session: NextPage = () => {
           {sessionData.patientId.firstName} {sessionData.patientId.lastName}
           &apos;s records
         </h1>
-        <p className="mt-4 font-semibold">
-          Started:{' '}
-          <span className="font-light">
-            {new Date(sessionData.createdAt).toLocaleDateString()}
-          </span>
-        </p>
-        <button
-          className="px-8 py-3 bg-delta rounde-lg mt-4 shadow-md text-xl"
-          onClick={() => router.push(`/record/create?sessionId=${sessionId}`)}
-        >
-          New
-        </button>
+
+        <div className="mt-4">
+          <p className="font-semibold">
+            Started:{' '}
+            <span className="font-light">
+              {new Date(sessionData.createdAt).toLocaleString()}
+            </span>
+          </p>
+        </div>
+
+        {!sessionData.active && (
+          <div className="mt-4">
+            <p className="font-semibold">
+              Ended:{' '}
+              <span className="font-light">
+                {new Date(sessionData.updatedAt).toLocaleString()}
+              </span>
+            </p>
+          </div>
+        )}
+
+        <div className="mt-4">
+          <button
+            className="px-8 py-3 bg-delta rounde-lg shadow-md text-xl disabled:bg-slate-300"
+            onClick={() =>
+              router.push(`/records/create?sessionId=${sessionId}`)
+            }
+            disabled={!sessionData.active}
+          >
+            New
+          </button>
+        </div>
+
+        <div className="mt-4">
+          <button
+            className="px-8 py-3 bg-red-400 rounde-lg shadow-md text-xl disabled:bg-slate-300"
+            onClick={endSession}
+            disabled={!sessionData.active}
+          >
+            End Session
+          </button>
+        </div>
       </div>
       <div className="mt-4 p-8 flex flex-col gap-2 flex-grow-0 overflow-y-auto">
         {/* @ts-ignore */}
