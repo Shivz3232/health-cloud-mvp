@@ -31,6 +31,36 @@ const apiRoute = nextConnect({
 
 apiRoute.use(uploadMiddleWare);
 
+apiRoute.get(async (req, res) => {
+  const session = await getSession({ req });
+
+  if (!session) {
+    res.status(401);
+    res.json({ message: 'Not Authenticated' });
+    return res.end();
+  }
+
+  const recordId = req.query.recordId;
+
+  if (!recordId) {
+    res.status(400);
+    res.json({ message: 'Record Id is required' });
+    return res.end();
+  }
+
+  const recordDoc = await Record.findById(recordId);
+
+  if (!recordDoc) {
+    res.status(404);
+    res.json({ message: 'Record not found' });
+    return res.end();
+  }
+
+  res.status(200);
+  res.json(recordDoc);
+  res.end();
+});
+
 apiRoute.post(async (req, res) => {
   const session = await getSession({ req });
 
